@@ -1,1 +1,98 @@
-<h1>Hello World Wide Web!</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The Floating Shape</title>
+    <style>
+      body {
+        margin: 0;
+        background: #141832;
+        overflow: hidden;
+      }
+
+      button {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        padding: 10px 24px;
+        font-size: 16px;
+        color: #ffdc50;
+        background: transparent;
+        border: 3px solid #ffdc50;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #ffdc50;
+        color: #141832;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  </head>
+  <body>
+    <script>
+      //VARIABLES & DATA TYPES
+      let x = 0; // Number: horizontal position
+      let y = 200; // vertical position
+      let speed = 3; // how fast it moves sideways
+      let shapeName = "SMILEY"; // STRING: name of our shape
+      let isMoving = true; // BOOLEAN: true = moving, false = paused
+      let moveButton;
+
+      function setup () {
+        createCanvas(windowWidth, windowHeight);
+        y = height / 2
+        moveButton = createButton("Pause");
+        moveButton.mousePressed(toggleMovement);
+      }
+
+      // DRAW 
+      function draw () {
+        background(20, 24, 50);
+
+        if (isMoving) {
+          moveShape();
+        }
+        drawShape();
+      }
+
+      //FUNCTION 1: moves the shape sideways
+      function moveShape () {
+        x = x + speed;
+        // Wrap around when it leaves the right side
+        if (x > width + 50) {
+          x = -50;
+        }
+      }
+      //FUNCTION 2: draws the shape, TOOK FROM GOOGLE "AI OVERVIEW".
+      function drawShape () {
+        // Face
+        fill(255, 220, 80);
+        stroke(255, 150, 0);
+        strokeWeight(3);
+        ellipse(x, y, 100, 100);
+
+        // Eyes
+        fill(20, 24, 50);
+        noStroke();
+        ellipse(x - 18, y - 12, 12, 12);
+        ellipse(x + 18, y - 12, 12, 12);
+        // Smile
+        noFill();
+        stroke(20, 24, 50);
+        strokeWeight(4);
+        arc(x, y + 5, 50, 40, 0, PI);
+      }
+      //FUNCTION 3: button click flips the boolean
+      function toggleMovement () {
+        isMoving = !isMoving;
+
+        if (isMoving) {
+          moveButton.html("Pause");
+        } else {
+          moveButton.html("Play");
+        }
+      }
+    </script>
+  </body>
+</html>
